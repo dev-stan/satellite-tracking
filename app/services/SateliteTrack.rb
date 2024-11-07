@@ -1,14 +1,14 @@
 # app/models/satelite_track.rb
-require 'net/http'
-require 'json'
-require 'uri'
+require "net/http"
+require "json"
+require "uri"
 
 class SateliteTrack
   BASE_URL = "https://api.n2yo.com/rest/v1/satellite"
   GEOCODING_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places"
 
-  API_KEY = ENV['N2YO_TOKEN']
-  MAPBOX_TOKEN = ENV['MAPBOX_TOKEN']
+  API_KEY = ENV["N2YO_TOKEN"]
+  MAPBOX_TOKEN = ENV["MAPBOX_TOKEN"]
 
   # Haversine formula to calculate distance in km
   def self.calculate_distance(lat1, lon1, lat2, lon2)
@@ -23,7 +23,7 @@ class SateliteTrack
     a = Math.sin(dlat_rad / 2)**2 +
         Math.cos(lat1_rad) * Math.cos(lat2_rad) *
         Math.sin(dlon_rad / 2)**2
-    c = 2 * Math.atan2(Math::sqrt(a), Math::sqrt(1 - a))
+    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
     rkm * c # Delta in kilometers
   end
@@ -37,15 +37,15 @@ class SateliteTrack
 
     satelite_list = []
 
-    if data['above']
-      data['above'].each do |sat|
-        if sat['satlat'] && sat['satlng']
-          distance = calculate_distance(latitude, longitude, sat['satlat'], sat['satlng'])
+    if data["above"]
+      data["above"].each do |sat|
+        if sat["satlat"] && sat["satlng"]
+          distance = calculate_distance(latitude, longitude, sat["satlat"], sat["satlng"])
           satelite_list << {
-            sat_id: sat['satid'],
-            observer_lat: sat['satlat'],
-            observer_lng: sat['satlng'],
-            satname: sat['satname'],
+            sat_id: sat["satid"],
+            observer_lat: sat["satlat"],
+            observer_lng: sat["satlng"],
+            satname: sat["satname"],
             distance: distance
           }
         end
@@ -63,8 +63,8 @@ class SateliteTrack
 
     Rails.logger.info("Geocoding API Response: #{data}")
 
-    if data['features'] && data['features'].any?
-      longitude, latitude = data['features'][0]['center']
+    if data["features"] && data["features"].any?
+      longitude, latitude = data["features"][0]["center"]
       { latitude: latitude, longitude: longitude }
     else
       nil
