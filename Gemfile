@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "bootstrap"
 gem "sassc-rails"
 gem "dotenv-rails"
+gem "dotenv"
 gem "font-awesome-sass"
 
 gem "json"
