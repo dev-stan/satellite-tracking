@@ -1,0 +1,156 @@
+/* Global box-sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: image-url('star-bg.png'); /* Updated line */
+  background-size: cover;
+  background-repeat: repeat;
+}
+
+/* Header Section */
+.header {
+  min-height: 100vh; /* Occupies full viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2); /* Optional: add a semi-transparent overlay for better text visibility */
+}
+
+.header h1 {
+  font-family: "Source Code Pro", monospace;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 3rem; /* Adjusted for better responsiveness */
+  text-shadow: 0px 0px 32px #FFE4AF;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.header form { /* Assuming the search form is inside a form tag */
+  width: 100%;
+  max-width: 500px;
+}
+
+.header input[type="text"] {
+  width: 80%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.header button {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  background-color: #ff5722;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.header button:hover {
+  background-color: #e64a19;
+}
+
+/* Main Content Section */
+.main-content {
+  display: flex;
+  padding: 3rem;
+  min-height: 100vh; /* Ensures it takes up enough space */
+  background: rgba(0, 0, 0, 0.2); /* Optional: background for better contrast */
+}
+
+/* Map Column */
+.map-column {
+  flex: 2;
+  padding: 1rem;
+  min-width: 0; /* Prevents overflow due to long content */
+}
+
+#map {
+  width: 100%;
+  border-radius: 1.2rem;
+  box-shadow: 0px 0px 16px #FFE4AF;
+  flex: 1 1 0;
+  min-height: 0; /* Ensures both elements can adjust to available height */
+  height: 100%; /* Occupies full height within the container */
+}
+
+/* Sidebar Column */
+.sidebar-column {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Prevents overflow due to long content */
+}
+
+#sidebar {
+  background: #fff; /* Changed from #323232 to white */
+  color: #000; /* Changed from #fff to black */
+  border-radius: 1.2rem;
+  box-shadow: 0px 0px 16px #FFE4AF; /* Adjusted shadow for lighter background */
+  flex: 1; /* Sidebar takes up the available vertical space */
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Allows the sidebar to shrink properly */
+}
+
+#sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #ccc; /* Changed border color for lighter theme */
+  flex: 0 0 auto; /* Prevents the header from stretching */
+}
+
+
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+#satellite-cards::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Internet Explorer and Edge */
+#satellite-cards {
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Styles for the satellite cards */
+.card-title {
+  font-size: 120%;
+  margin-bottom: 0.2rem;
+}
+
+.card-text {
+  margin-bottom: 0.25rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .map-column, .sidebar-column {
+    flex: none;
+    width: 100%;
+    padding: 0;
+  }
+
+  #map {
+    height: 300px;
+  }
+
+  .card {
+    width: calc(50% - 0.8rem); /* Two cards per row on smaller screens */
+  }
+}
