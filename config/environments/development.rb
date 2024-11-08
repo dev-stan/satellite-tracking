@@ -81,5 +81,4 @@ Rails.application.configure do
   # config/environments/development.rb
   config.hosts << "de8d-83-11-157-141.ngrok-free.app"
   config.hosts << "de8d-83-11-157-141.ngrok-free.app"
-
 end

@@ -38,15 +38,18 @@
         padding: 2rem;
         text-align: center;
         background: rgba(0, 0, 0, 0.2);
+        overflow: hidden;
       }
 
       .header h1 {
         font-family: "Source Code Pro", monospace;
         font-weight: bold;
-        font-size: 3rem;
+        font-size: calc(2rem + 2vw);
         text-shadow: 0px 0px 32px #FFE4AF;
         color: #fff;
         margin-bottom: 1.5rem;
+        max-width: 100%;
+        word-wrap: break-word;
       }
 
       /* Floating Arrow */
@@ -63,6 +66,7 @@
       /* Satellite Cards */
       #satellite-cards {
         background: #fff;
+        height: 100%;
       }
 
       /* Hide scrollbar */
@@ -72,6 +76,13 @@
 
       #satellite-cards {
         -ms-overflow-style: none;
+      }
+
+      @media (max-width: 900px) {
+        .map-column, .sidebar-column {
+          flex: 0 0 100%;
+          max-width: 100%;
+        }
       }
     </style>
   </head>
@@ -83,25 +94,25 @@
     <a href="#end" class="floating-arrow" aria-label="Scroll Down">
       <i class="fa-solid fa-chevron-down" style="text-shadow: 0px 0px 32px #FFE4AF;"></i>
     </a>
-    <main class="container-fluid main-content" id="main-content">
-      <div class="row">
+    <main class="container-fluid main-content h-100" id="main-content">
+      <div class="row gx-3 h-100">
         <!-- Map Column -->
-        <div class="col-md-8 map-column">
-          <div id="map" class="w-100 h-100 rounded shadow"></div>
+        <div class="col-12 col-md-8 mb-4 mb-md-0 d-flex justify-content-center map-column">
+          <div id="map" class="w-100 h-100 rounded shadow" style="min-height: 400px;"></div>
         </div>
         <!-- Sidebar Column -->
-        <div class="col-md-4 sidebar-column mt-4 mt-md-0">
+        <div class="col-12 col-md-4 d-flex flex-column h-100 sidebar-column">
           <div id="sidebar" class="bg-white rounded shadow h-100 d-flex flex-column">
             <div id="sidebar-header" class="p-4 border-bottom">
               <h4 id="sidebar-title" class="text-center mb-4">Satellites Above Poznan...</h4>
-              <div class="d-flex gap-2 flex-column flex-md-row">
-                <button class="btn btn-light sidebar-button" id="search-again">
+              <div class="d-flex gap-2 flex-wrap justify-content-center">
+                <button class="btn btn-light sidebar-button flex-fill" id="search-again">
                   Search again
                 </button>
-                <button class="btn btn-light sidebar-button" id="learn-more">
+                <button class="btn btn-light sidebar-button flex-fill" id="learn-more">
                   Learn more
                 </button>
-                <button class="btn btn-light sidebar-button" id="other-projects">
+                <button class="btn btn-light sidebar-button flex-fill" id="other-projects">
                   Other projects
                 </button>
               </div>
@@ -130,8 +141,6 @@
         });
         let markers = [];
         let satellites = <%= raw @satelites_list.to_json %>;
-
-
 
         const searchAgainBtn = document.querySelector('#search-again');
         searchAgainBtn.addEventListener('click', () => {
@@ -171,7 +180,7 @@
               </div>`;
             container.insertAdjacentHTML('beforeend', cardHtml);
           });
-          document.getElementById('sidebar-title').textContent = `Satellites Above ${locationName} 📡`;
+          document.getElementById('sidebar-title').textContent = `Satellites Above ${locationName} 🛡`;
         }
 
         initializeMapAndCards(satellites, 52.409538, 16.931992, 'Poznan');
