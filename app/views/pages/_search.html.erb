@@ -30,34 +30,35 @@
       </form>
     </div>
   </div>
-  <!-- Remove or repurpose the #end div if it's not needed elsewhere -->
-  <!-- <div id="end">
-  <!-- Content you want to scroll to -->
-  <!-- </div> -->
-  <!-- Add the JavaScript function -->
+  <!-- Add JavaScript to handle form submission and log event to Google Analytics -->
   <script>
     function handleFormSubmit(event) {
-      event.preventDefault(); // Prevent the default form submission
+      event.preventDefault(); // Prevent default form submission
 
       const query = document.getElementById('search-query').value.trim();
 
       if (query === "") {
-        // Optionally, display a custom validation message
         alert("Please enter your location.");
         return;
       }
 
       console.log('Search query:', query);
-      // You can perform an AJAX request or any other logic here
 
-      // Smoothly scroll to the bottom of the page
+      // Log the search event to Google Analytics with the search query
+      gtag('event', 'search_button_click', {
+        'event_category': 'Search',
+        'event_label': 'Search Button Click',
+        'search_term': query // Custom parameter for search terms
+      });
+
+      // Smooth scroll to bottom of page
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: 'smooth'
       });
     }
   </script>
-  <!-- Add custom CSS to remove outlines and default styles -->
+  <!-- Custom CSS (unchanged) -->
   <style>
     /* Container Styling */
     .search-container {
@@ -77,21 +78,14 @@
       border: none;
       background-color: transparent;
       font-size: 1rem;
-      outline: none; /* Remove default focus outline */
+      outline: none;
     }
 
     .search-input:focus {
-      /* Optionally, add a custom focus style */
-      /* For example, a subtle box-shadow or border */
-      /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+      /* Optional custom focus style */
     }
 
     /* Button Styling */
-    .search-button {
-      /* Remove any default button styles */
-    }
-
-    /* Remove focus outline from button */
     .search-button:focus {
       outline: none;
     }

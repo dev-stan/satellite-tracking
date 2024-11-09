@@ -122,6 +122,8 @@ GEM
       sassc (~> 2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-analytics (0.1.0)
+      nokogiri
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.3)
@@ -325,6 +327,7 @@ DEPENDENCIES
   dotenv
   dotenv-rails
   font-awesome-sass
+  google-analytics
   importmap-rails
   jbuilder
   json

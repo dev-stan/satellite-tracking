@@ -33,7 +33,6 @@ class SateliteTrack
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
 
-    Rails.logger.info("API Response: #{data}")
 
     satelite_list = []
 
@@ -66,7 +65,6 @@ class SateliteTrack
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
 
-    Rails.logger.info("Geocoding API Response: #{data}")
 
     if data["features"] && data["features"].any?
       longitude, latitude = data["features"][0]["center"]

@@ -6,7 +6,6 @@ class PagesController < ApplicationController
     @mapbox_token = ENV["MAPBOX_TOKEN"]
     @satelites_list = SateliteTrack.get_satelite_nearby(52.409538, 16.931992, altitude=0, radius=30)
 
-    Rails.logger.info(@satelites_list)
   end
 
   def search
