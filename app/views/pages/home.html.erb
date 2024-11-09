@@ -125,7 +125,7 @@
               <div class="d-flex gap-2 flex-wrap justify-content-center">
                 <button class="btn btn-light sidebar-button flex-fill" id="search-again">Search again</button>
                 <button class="btn btn-light sidebar-button flex-fill" id="learn-more">Learn more</button>
-                <button class="btn btn-light sidebar-button flex-fill" id="other-projects">Other projects</button>
+                <button class="btn btn-light sidebar-button flex-fill" id="other-projects">Reset zoom</button>
               </div>
             </div>
             <div id="satellite-cards" class="p-3 overflow-auto flex-grow-1">
@@ -177,7 +177,7 @@
 
           const otherProjectsBtn = document.querySelector('#other-projects');
           otherProjectsBtn.addEventListener('click', () => {
-            window.open('https://www.example.com/other-projects', '_blank'); // Update with actual URL
+            map.flyTo({ zoom: 5 }); // Adjusts the zoom level to 6 smoothly
           });
 
           /**
