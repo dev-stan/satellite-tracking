@@ -4,340 +4,307 @@
     <title>Satellites Above Me</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    >
-      <!-- Mapbox CSS -->
-      <link
-      href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
-      rel="stylesheet"
-    >
-        <!-- Font Awesome CSS -->
-        <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    >
-          <!-- Google Fonts -->
-          <link
-      href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Source+Code+Pro:wght@200..900&display=swap"
-      rel="stylesheet"
-    >
-            <!-- Your CSS Styles -->
-            <style>
-              /* Global box-sizing */
-              *,
-              *::before,
-              *::after {
-                box-sizing: border-box;
-              }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Mapbox CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Source+Code+Pro:wght@200..900&display=swap" rel="stylesheet">
+    <!-- Your CSS Styles -->
+    <style>
+      /* Global box-sizing */
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
 
-              html,
-              body {
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                background-image: url('<%= asset_path('star-bg.png') %>');
-                background-size: cover;
-                background-repeat: repeat;
-                font-family: 'Kanit', sans-serif;
-              }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-image: url('<%= asset_path('star-bg.png') %>');
+        background-size: cover;
+        background-repeat: repeat;
+        font-family: 'Kanit', sans-serif;
+      }
 
-              /* Header Section */
-              .header {
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 2rem;
-                text-align: center;
-                background: rgba(0, 0, 0, 0.2);
-                overflow: hidden;
-              }
+      /* Header Section */
+      .header {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
 
-              .header h1 {
-                font-family: 'Source Code Pro', monospace;
-                font-weight: bold;
-                font-size: calc(2rem + 2vw);
-                text-shadow: 0px 0px 32px #ffe4af;
-                color: #fff;
-                margin-bottom: 1.5rem;
-                max-width: 100%;
-                word-wrap: break-word;
-              }
+      .header h1 {
+        font-family: "Source Code Pro", monospace;
+        font-weight: bold;
+        font-size: calc(2rem + 2vw);
+        text-shadow: 0px 0px 32px #FFE4AF;
+        color: #fff;
+        margin-bottom: 1.5rem;
+        max-width: 100%;
+        word-wrap: break-word;
+      }
 
-              /* Floating Arrow */
-              .floating-arrow {
-                position: absolute;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                color: #fff;
-                font-size: 2rem;
-                text-decoration: none;
-              }
+      /* Floating Arrow */
+      .floating-arrow {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #fff;
+        font-size: 2rem;
+        text-decoration: none;
+      }
 
-              /* Satellite Cards */
-              #satellite-cards {
-                background: #fff;
-                height: 100%;
-              }
+      /* Satellite Cards */
+      #satellite-cards {
+        background: #fff;
+        height: 100%;
+      }
 
-              /* Hide scrollbar */
-              #satellite-cards::-webkit-scrollbar {
-                display: none;
-              }
+      /* Hide scrollbar */
+      #satellite-cards::-webkit-scrollbar {
+        display: none;
+      }
 
-              #satellite-cards {
-                -ms-overflow-style: none;
-              }
+      #satellite-cards {
+        -ms-overflow-style: none;
+      }
 
-              /* Mobile-specific styling */
-              @media (max-width: 900px) {
-                .map-column,
-                .sidebar-column {
-                  flex: 0 0 100%;
-                  max-width: 100%;
-                }
-                #sidebar {
-                  margin-bottom: 2rem;
-                }
-              }
+      @media (max-width: 900px) {
+        .map-column, .sidebar-column {
+          flex: 0 0 100%;
+          max-width: 100%;
+        }
+      }
 
-              /* Custom Marker Styles */
-              .marker {
-                cursor: pointer;
-              }
-            </style>
-          </head>
-          <body>
-            <header class="header" id="header">
-              <h1>satellitesaboveme.com</h1>
-              <%= render 'search' %>
-            </header>
-            <a href="#end" class="floating-arrow" aria-label="Scroll Down">
-              <i
-        class="fa-solid fa-chevron-down"
-        style="text-shadow: 0px 0px 32px #ffe4af;"
-      ></i>
-            </a>
-            <main class="container-fluid main-content h-100 mb-3" id="main-content">
-              <div class="row gx-3 h-100">
-                <!-- Map Column -->
-                <div
-          class="col-12 col-md-8 mb-4 mb-md-0 d-flex justify-content-center map-column"
-        >
-                  <div
-            id="map"
-            class="w-100 h-100 rounded shadow"
-            style="min-height: 400px;"
-          ></div>
-                </div>
-                <!-- Sidebar Column -->
-                <div
-          class="col-12 col-md-4 d-flex flex-column h-100 sidebar-column"
-        >
-                  <div
-            id="sidebar"
-            class="bg-white rounded shadow h-100 d-flex flex-column"
-          >
-                    <div id="sidebar-header" class="p-4 border-bottom">
-                      <h4 id="sidebar-title" class="text-center mb-4">
-                        Satellites Above Poznan...
-                      </h4>
-                      <div class="d-flex gap-2 flex-wrap justify-content-center">
-                        <button
-                  class="btn btn-light sidebar-button flex-fill"
-                  id="search-again"
-                >
-                          Search again
-                        </button>
-                        <button
-                  class="btn btn-light sidebar-button flex-fill"
-                  id="learn-more"
-                >
-                          Learn more
-                        </button>
-                        <button
-                  class="btn btn-light sidebar-button flex-fill"
-                  id="other-projects"
-                >
-                          Other projects
-                        </button>
-                      </div>
-                    </div>
-                    <div
-              id="satellite-cards"
-              class="p-3 overflow-auto flex-grow-1"
-            >
-                      <div id="end"></div>
-                    </div>
-                  </div>
-                </div>
+      /* Custom Styles for Mapbox Popups */
+      .mapboxgl-popup-content {
+        border-radius: 15px; /* Rounded corners */
+        padding: 15px; /* Optional: Adjust padding */
+        font-family: 'Kanit', sans-serif; /* Consistent font */
+        background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+      }
+
+      .mapboxgl-popup-content h5 {
+        margin-top: 0;
+        font-family: 'Source Code Pro', monospace;
+      }
+
+      .popup-field {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header" id="header">
+      <h1>satellitesaboveme.com</h1>
+      <%= render 'search' %>
+    </header>
+    <a href="#end" class="floating-arrow" aria-label="Scroll Down">
+      <i class="fa-solid fa-chevron-down" style="text-shadow: 0px 0px 32px #ffe4af;"></i>
+    </a>
+    <main class="container-fluid main-content h-100 mb-3" id="main-content">
+      <div class="row gx-3 h-100">
+        <!-- Map Column -->
+        <div class="col-12 col-md-8 mb-4 mb-md-0 d-flex justify-content-center map-column">
+          <div id="map" class="w-100 h-100 rounded shadow" style="min-height: 400px;"></div>
+        </div>
+        <!-- Sidebar Column -->
+        <div class="col-12 col-md-4 d-flex flex-column h-100 sidebar-column">
+          <div id="sidebar" class="bg-white rounded shadow h-100 d-flex flex-column">
+            <div id="sidebar-header" class="p-4 border-bottom">
+              <h4 id="sidebar-title" class="text-center mb-4">Satellites Above Poznan...</h4>
+              <div class="d-flex gap-2 flex-wrap justify-content-center">
+                <button class="btn btn-light sidebar-button flex-fill" id="search-again">Search again</button>
+                <button class="btn btn-light sidebar-button flex-fill" id="learn-more">Learn more</button>
+                <button class="btn btn-light sidebar-button flex-fill" id="other-projects">Other projects</button>
               </div>
-            </main>
-            <!-- Mapbox JS -->
-            <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-            <!-- Bootstrap JS and dependencies -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-            <!-- Your JavaScript Code -->
-            <script>
-              document.addEventListener('DOMContentLoaded', () => {
-                mapboxgl.accessToken = "<%= @mapbox_token %>";
-                const map = new mapboxgl.Map({
-                  container: 'map',
-                  style: 'mapbox://styles/mapbox/streets-v11',
-                  center: [16.931992, 52.409538],
-                  zoom: 5,
-                  interactive: false,
-                });
-                let markers = [];
-                let satellites = <%= raw @satelites_list.to_json %>;
+            </div>
+            <div id="satellite-cards" class="p-3 overflow-auto flex-grow-1">
+              <div id="end"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Mapbox JS -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Your JavaScript Code -->
+    <!-- Your JavaScript Code -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        mapboxgl.accessToken = "<%= @mapbox_token %>";
+        const map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: [16.931992, 52.409538],
+          zoom: 5,
+          interactive: false, // Keeps the map non-interactive (no panning or zooming)
+        });
+        let markers = [];
+        let satellites = <%= raw @satelites_list.to_json %>;
 
-                const searchAgainBtn = document.querySelector('#search-again');
-                searchAgainBtn.addEventListener('click', () => {
-                  document
-                    .getElementById('header')
-                    .scrollIntoView({ behavior: 'smooth' });
-                });
+        // Variable to keep track of the currently open popup
+        let currentPopup = null;
 
-                const learnMoreBtn = document.querySelector('#learn-more');
-                learnMoreBtn.addEventListener('click', () => {
-                  window.open('https://www.n2yo.com/', '_blank');
-                });
+        const searchAgainBtn = document.querySelector('#search-again');
+        searchAgainBtn.addEventListener('click', () => {
+          document.getElementById('header').scrollIntoView({ behavior: 'smooth' });
+        });
 
-                const otherProjectsBtn = document.querySelector('#other-projects');
-                otherProjectsBtn.addEventListener('click', () => {
-                  window.open(
-                    'https://www.example.com/other-projects',
-                    '_blank'
-                  ); // Update with actual URL
-                });
+        const learnMoreBtn = document.querySelector('#learn-more');
+        learnMoreBtn.addEventListener('click', () => {
+          window.open('https://www.n2yo.com/', '_blank');
+        });
 
-                function initializeMapAndCards(
-                  satellites,
-                  lat,
-                  lng,
-                  locationName
-                ) {
-                  map.setCenter([lng, lat]);
-                  markers.forEach((markerData) => markerData.marker.remove());
-                  markers = [];
-                  const container = document.getElementById('satellite-cards');
-                  container.innerHTML = '';
-                  satellites.forEach((satellite, index) => {
-                    // Create a custom marker element
-                    const el = document.createElement('div');
-                    el.className = 'marker';
-                    el.style.backgroundColor = 'red';
-                    el.style.width = '20px';
-                    el.style.height = '20px';
-                    el.style.borderRadius = '50%';
+        const otherProjectsBtn = document.querySelector('#other-projects');
+        otherProjectsBtn.addEventListener('click', () => {
+          window.open('https://www.example.com/other-projects', '_blank'); // Update with actual URL
+        });
 
-                    const marker = new mapboxgl.Marker(el)
-                      .setLngLat([
-                        satellite.observer_lng,
-                        satellite.observer_lat,
-                      ])
-                      .setPopup(
-                        new mapboxgl.Popup().setText(satellite.satname)
-                      )
-                      .addTo(map);
+        /**
+         * Function to handle the selection of a marker or card by index.
+         * @param {number} index - The index of the selected satellite.
+         */
+        function selectSatelliteByIndex(index) {
+          // Reset all markers to default style and close any open popups
+          markers.forEach((m) => {
+            m.element.style.backgroundColor = 'red';
+            m.element.style.width = '20px';
+            m.element.style.height = '20px';
+            if (m.marker.getPopup().isOpen()) {
+              m.marker.getPopup().remove();
+            }
+          });
 
-                    // Store marker with index and element
-                    markers.push({
-                      marker: marker,
-                      index: index,
-                      element: el,
-                    });
+          // Close the currently open popup if it exists
+          if (currentPopup) {
+            currentPopup.remove();
+          }
 
-                    // Create satellite card with data-index attribute
-                    const cardHtml = `
-                      <div class="card mb-2" data-index="${index}">
-                        <div class="card-body p-2">
-                          <h5 class="card-title">${satellite.satname}</h5>
-                          <p class="card-text mb-1">Latitude: ${satellite.observer_lat.toFixed(
-                            4
-                          )}</p>
-                          <p class="card-text mb-1">Longitude: ${satellite.observer_lng.toFixed(
-                            4
-                          )}</p>
-                          <p class="card-text mb-0">Distance: ${satellite.distance.toFixed(
-                            2
-                          )} km</p>
-                        </div>
-                      </div>`;
-                    container.insertAdjacentHTML('beforeend', cardHtml);
-                  });
-                  document.getElementById(
-                    'sidebar-title'
-                  ).textContent = `Satellites Above ${locationName} 🛡`;
+          // Find the selected marker
+          const markerData = markers.find((m) => m.index == index);
+          if (markerData) {
+            // Highlight the selected marker
+            markerData.element.style.backgroundColor = 'green';
+            markerData.element.style.width = '30px';
+            markerData.element.style.height = '30px';
 
-                  // Add click event listeners to cards
-                  const cards = container.querySelectorAll('.card');
-                  cards.forEach((card) => {
-                    card.addEventListener('click', function () {
-                      const index = this.getAttribute('data-index');
-                      // Reset all markers to red
-                      markers.forEach((m) => {
-                        m.element.style.backgroundColor = 'red';
-                        m.element.style.width = '20px';
-                        m.element.style.height = '20px';
-                      });
-                      // Find the marker with this index
-                      const markerData = markers.find((m) => m.index == index);
-                      if (markerData) {
-                        // Change marker color to green
-                        markerData.element.style.backgroundColor = 'green';
-                        markerData.element.style.width = '40px';
-                        markerData.element.style.height = '40px';
-                      }
-                    });
-                  });
-                }
+            // Open the popup for the selected marker
+            markerData.marker.getPopup().addTo(map);
+            currentPopup = markerData.marker.getPopup();
 
-                initializeMapAndCards(
-                  satellites,
-                  52.409538,
-                  16.931992,
-                  'Poznan'
-                );
+            // Fly to the marker's location
+            map.flyTo({ center: markerData.marker.getLngLat(), zoom: 7 });
+          }
+        }
 
-                const searchForm = document.getElementById('search-form');
-                const searchQueryInput = document.getElementById('search-query');
+        function initializeMapAndCards(satellites, lat, lng, locationName) {
+          map.setCenter([lng, lat]);
+          markers.forEach((markerData) => markerData.marker.remove());
+          markers = [];
+          const container = document.getElementById('satellite-cards');
+          container.innerHTML = '';
+          satellites.forEach((satellite, index) => {
+            // Create a custom marker element
+            const el = document.createElement('div');
+            el.className = 'marker';
+            el.style.backgroundColor = 'red';
+            el.style.width = '20px';
+            el.style.height = '20px';
+            el.style.borderRadius = '50%';
+            el.style.cursor = 'pointer'; // Change cursor to pointer to indicate interactivity
 
-                searchForm.addEventListener('submit', function (event) {
-                  event.preventDefault();
-                  const query = searchQueryInput.value.trim();
-                  if (!query) {
-                    alert('Please enter a city name.');
-                    return;
-                  }
-                  fetch(`/search?query=${encodeURIComponent(query)}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                      if (data.error) {
-                        alert(data.error);
-                        return;
-                      }
-                      initializeMapAndCards(
-                        data.satellites,
-                        data.observer_lat,
-                        data.observer_lng,
-                        query
-                      );
-                    })
-                    .catch((error) => {
-                      console.error('Error fetching data:', error);
-                      alert(`An error occurred: ${error.message}`);
-                    });
-                });
+            // Create popup content with additional information
+            const popupContent = `
+              <div class="popup-content">
+                <h5>${satellite.satname}</h5>
+                <div class="popup-field">Latitude: ${satellite.observer_lat.toFixed(4)}</div>
+                <div class="popup-field">Longitude: ${satellite.observer_lng.toFixed(4)}</div>
+                <div class="popup-field">Distance: ${satellite.distance.toFixed(2)} km</div>
+                <!-- Add more fields as needed -->
+                <div class="popup-field">Type: ${satellite.type || 'N/A'}</div>
+                <div class="popup-field">Launch Date: ${satellite.launch_date || 'N/A'}</div>
+              </div>
+            `;
 
-                window.addEventListener('load', () => {
-                  map.resize(); // Resize is a hotfix for mapbox not rendering correctly
-                });
-              });
-            </script>
-          </body>
-        </html>
+            const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent);
+
+            const marker = new mapboxgl.Marker(el)
+              .setLngLat([satellite.observer_lng, satellite.observer_lat])
+              .setPopup(popup)
+              .addTo(map);
+
+            markers.push({ marker: marker, index: index, element: el });
+
+            // Add click event listener to the marker element
+            el.addEventListener('click', () => {
+              selectSatelliteByIndex(index);
+            });
+
+            const cardHtml = `
+              <div class="card mb-2" data-index="${index}">
+                <div class="card-body p-2">
+                  <h5 class="card-title">${satellite.satname}</h5>
+                  <p class="card-text mb-1">Latitude: ${satellite.observer_lat.toFixed(4)}</p>
+                  <p class="card-text mb-1">Longitude: ${satellite.observer_lng.toFixed(4)}</p>
+                  <p class="card-text mb-0">Distance: ${satellite.distance.toFixed(2)} km</p>
+                </div>
+              </div>`;
+            container.insertAdjacentHTML('beforeend', cardHtml);
+          });
+          document.getElementById('sidebar-title').textContent = `Satellites Above ${locationName} 🛡`;
+
+          const cards = container.querySelectorAll('.card');
+          cards.forEach((card) => {
+            card.addEventListener('click', function () {
+              const index = this.getAttribute('data-index');
+              selectSatelliteByIndex(index);
+            });
+          });
+        }
+
+        initializeMapAndCards(satellites, 52.409538, 16.931992, 'Poznan');
+
+        const searchForm = document.getElementById('search-form');
+        const searchQueryInput = document.getElementById('search-query');
+
+        searchForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const query = searchQueryInput.value.trim();
+          if (!query) {
+            alert('Please enter a city name.');
+            return;
+          }
+          fetch(`/search?query=${encodeURIComponent(query)}`)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.error) {
+                alert(data.error);
+                return;
+              }
+              initializeMapAndCards(data.satellites, data.observer_lat, data.observer_lng, query);
+            })
+            .catch((error) => {
+              console.error('Error fetching data:', error);
+              alert(`An error occurred: ${error.message}`);
+            });
+        });
+
+        window.addEventListener('load', () => {
+          map.resize();
+        });
+      });
+    </script>
+  </body>
+</html>
