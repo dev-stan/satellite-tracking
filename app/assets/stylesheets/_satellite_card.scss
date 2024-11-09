@@ -12,6 +12,12 @@
     align-items: center;
     text-align: start;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+    &:hover {
+
+      background-color: rgb(216, 222, 255) !important;
+    }
+    transition: 0.4s ease;
+    cursor: pointer;
   }
   
   #satellite-cards {

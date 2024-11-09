@@ -46,7 +46,12 @@ class SateliteTrack
             observer_lat: sat["satlat"],
             observer_lng: sat["satlng"],
             satname: sat["satname"],
-            distance: distance
+            distance: distance,
+            category: sat["category"],
+            launchdate: sat["launchDate"],
+            satalt: sat["satalt"],
+
+
           }
         end
       end
