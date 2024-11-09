@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
 
   # code below helps out with meta tags 
   def default_url_options
-    { host: ENV[“DOMAIN”] || “localhost:3000” }
+    { host: ENV[“DOMAIN”] || “localhost:3000"}
     end
 end
