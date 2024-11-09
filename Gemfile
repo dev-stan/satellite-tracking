@@ -5,7 +5,7 @@ gem "sassc-rails"
 gem "dotenv-rails"
 gem "dotenv"
 gem "font-awesome-sass"
-
+gem 'google-analytics'
 gem "json"
 gem "uri"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
