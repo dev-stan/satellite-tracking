@@ -59,7 +59,7 @@
         left: 50%;
         transform: translateX(-50%);
         color: #fff;
-        font-size: 2rem;
+        font-size: 4rem;
         text-decoration: none;
         z-index: 1000; /* Ensure it's above other elements */
         background: none;
@@ -92,6 +92,21 @@
         #sidebar {
           margin-bottom: 2rem;
         }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+      }
+
+      @media (max-width: 470px) {
+        .header h1 {
+          font-size: 6vw;
+        }
+
+        #sidebar {
+          padding-right: 0px;
+          padding-left: 0px;
+        }
       }
 
       /* Custom Styles for Mapbox Popups */
@@ -118,6 +133,13 @@
       }
 
       /* Responsive Popup Adjustments */
+
+      @media (min-width: 900px) {
+        #main-content {
+          padding-right: 3%;
+          padding-left: 3%;
+        }
+      }
       @media (max-width: 900px) {
         .mapboxgl-popup-content {
           max-width: 90vw; /* 90% of viewport width */
@@ -337,7 +359,7 @@
               </div>`;
             container.insertAdjacentHTML('beforeend', cardHtml);
           });
-          document.getElementById('sidebar-title').textContent = `Satellites Above ${locationName} 🛡`;
+          document.getElementById('sidebar-title').textContent = `Satellites Above ${locationName}...`;
 
           const cards = container.querySelectorAll('.satellite-card');
           cards.forEach((card) => {
