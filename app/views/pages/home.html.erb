@@ -290,7 +290,7 @@
             currentPopup = popup;
 
             // Determine the zoom level based on screen width
-            const zoomLevel = isMobileView() ? 5 : 7;
+            const zoomLevel = 4;
 
             // Fly to the marker's location with the appropriate zoom level
             map.flyTo({ center: markerData.marker.getLngLat(), zoom: zoomLevel });

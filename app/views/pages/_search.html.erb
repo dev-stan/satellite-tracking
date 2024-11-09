@@ -47,8 +47,8 @@
       // Log the search event to Google Analytics with the search query
       gtag('event', 'search_button_click', {
         'event_category': 'Search',
-        'event_label': 'Search Button Click',
-        'search_term': query // Custom parameter for search terms
+        'event_label': query,  // Log the query as the event label for better tracking
+        'search_term': query    // Custom parameter for search terms
       });
 
       // Smooth scroll to bottom of page
