@@ -8,6 +8,9 @@
 ARG RUBY_VERSION=3.3.5
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
+
 # Rails app lives here
 WORKDIR /rails
 
