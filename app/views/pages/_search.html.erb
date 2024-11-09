@@ -7,7 +7,7 @@
     <form
       id="search-form"
       class="search-form"
-      action="#end"
+      action="#"
       method="GET"
       onsubmit="handleFormSubmit(event)"
     >
@@ -18,8 +18,7 @@
         name="query"
         class="search-input"
         placeholder="Your location..."
-        
-        >
+      >
         <!-- Submit Button -->
         <button
         type="submit"
@@ -31,10 +30,10 @@
       </form>
     </div>
   </div>
-  <!-- Ensure this element exists somewhere on your page -->
-  <div id="end">
-    <!-- Content you want to scroll to -->
-  </div>
+  <!-- Remove or repurpose the #end div if it's not needed elsewhere -->
+  <!-- <div id="end">
+  <!-- Content you want to scroll to -->
+  <!-- </div> -->
   <!-- Add the JavaScript function -->
   <script>
     function handleFormSubmit(event) {
@@ -51,11 +50,11 @@
       console.log('Search query:', query);
       // You can perform an AJAX request or any other logic here
 
-      // Smoothly scroll to the #end div
-      const endElement = document.getElementById('end');
-      if (endElement) {
-        endElement.scrollIntoView({ behavior: 'smooth' });
-      }
+      // Smoothly scroll to the bottom of the page
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   </script>
   <!-- Add custom CSS to remove outlines and default styles -->

@@ -53,7 +53,7 @@ class SateliteTrack
     end
 
     # Sort satellites from closest to furthest
-    satelite_list.sort_by { |sat| sat[:distance] }
+    satelite_list.sort_by { |sat| sat[:distance] }.first(32)
   end
   def self.geocode_city(city_name)
     encoded_city = CGI.escape(city_name)
