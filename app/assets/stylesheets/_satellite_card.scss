@@ -1,7 +1,6 @@
 /* Styles for the satellite cards */
 .card {
-  width: calc(33.33% - 0.8rem); /* Three cards per row with gap */
-  height: 120px; /* Set a fixed height */
+  width: auto; /* Three cards per row with gap */
   border: 1px solid black; /* Set black border with 2px thickness */
   color: #000; /* Changed from #fff to black */
   border-radius: 0.75rem;
@@ -12,12 +11,12 @@
   cursor: pointer;
 
   h5 {
-    font-size: 160%;
+    font-size: 100%;
     font-weight: bold;
   }
 
   p {
-    font-size: 140%;
+    font-size: 100%;
   }
 }
 
