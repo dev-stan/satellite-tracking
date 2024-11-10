@@ -1,7 +1,8 @@
 /* Styles for the satellite cards */
 .card {
-  width: auto; /* Three cards per row with gap */
-  border: 1px solid black; /* Set black border with 2px thickness */
+  width: calc(33.33% - 0.8rem);
+  height: 120px;
+  border: 2px solid #e3e3e3;
   color: #000; /* Changed from #fff to black */
   border-radius: 0.75rem;
   display: flex;
@@ -10,18 +11,22 @@
   transition: 0.4s ease;
   cursor: pointer;
 
+  &:hover {
+    border: 2px solid #565656;
+  }
+
   h5 {
-    font-size: 100%;
+    font-size: 140%;
     font-weight: bold;
   }
 
   p {
-    font-size: 100%;
+    font-size: 120%;
   }
 }
 
 .card:hover {
-  background-color: rgb(216, 222, 255) !important;
+  background-color: rgb(138, 156, 254) !important;
 }
 
   

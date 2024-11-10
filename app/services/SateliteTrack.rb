@@ -10,6 +10,14 @@ class SateliteTrack
   API_KEY = ENV["N2YO_TOKEN"]
   MAPBOX_TOKEN = ENV["MAPBOX_TOKEN"]
 
+  # Define the category mapping
+  SATELLITE_CATEGORY_MAPPING = {
+    20480 => 18, # Amateur radio
+    26609 => 35, # Beidou Navigation System
+    40719 => 1  # Brightest
+    # Add all other mappings here
+  }
+
   # Haversine formula to calculate distance in km
   def self.calculate_distance(lat1, lon1, lat2, lon2)
     rad_per_deg = Math::PI / 180  # PI / 180
@@ -28,11 +36,11 @@ class SateliteTrack
     rkm * c # Delta in kilometers
   end
 
-  def self.get_satelite_nearby(latitude, longitude, altitude, radius)
-    uri = URI("#{BASE_URL}/above/#{latitude}/#{longitude}/#{altitude}/#{radius}/0/&apiKey=#{API_KEY}")
+  def self.get_satelite_nearby(latitude, longitude, altitude, radius, category_id = 0)
+    # Build the request URL with the specified category_id
+    uri = URI("#{BASE_URL}/above/#{latitude}/#{longitude}/#{altitude}/#{radius}/#{category_id}/&apiKey=#{API_KEY}")
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
-
 
     satelite_list = []
 
@@ -40,17 +48,20 @@ class SateliteTrack
       data["above"].each do |sat|
         if sat["satlat"] && sat["satlng"]
           distance = calculate_distance(latitude, longitude, sat["satlat"], sat["satlng"])
+
+          # Determine the category_id for the satellite
+          # If category_id is 0 (all categories), look up the category from the mapping
+          assigned_category_id = category_id == 0 ? (SATELLITE_CATEGORY_MAPPING[sat["satid"]] || 0) : category_id
+
           satelite_list << {
             sat_id: sat["satid"],
             observer_lat: sat["satlat"],
             observer_lng: sat["satlng"],
             satname: sat["satname"],
             distance: distance,
-            category: sat["category"],
             launchdate: sat["launchDate"],
-            satalt: sat["satalt"]
-
-
+            satalt: sat["satalt"],
+            category_id: assigned_category_id
           }
         end
       end
@@ -59,12 +70,12 @@ class SateliteTrack
     # Sort satellites from closest to furthest
     satelite_list.sort_by { |sat| sat[:distance] }
   end
+
   def self.geocode_city(city_name)
     encoded_city = CGI.escape(city_name)
     uri = URI("#{GEOCODING_URL}/#{encoded_city}.json?access_token=#{MAPBOX_TOKEN}&limit=1")
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
-
 
     if data["features"] && data["features"].any?
       longitude, latitude = data["features"][0]["center"]
