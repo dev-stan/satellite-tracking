@@ -115,14 +115,7 @@ html, body {
 
 
 /* Styles for the satellite cards */
-.card-title {
-  font-size: 120%;
-  margin-bottom: 0.2rem;
-}
 
-.card-text {
-  margin-bottom: 0.25rem;
-}
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
@@ -140,7 +133,4 @@ html, body {
     height: 300px;
   }
 
-  .card {
-    width: calc(50% - 0.8rem); /* Two cards per row on smaller screens */
-  }
 }

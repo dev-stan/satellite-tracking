@@ -1,5 +1,5 @@
  # config/meta.yml
  meta_product_name: "Satellites above me"
- meta_title: "Satellites above me - Take a look at the satellites above you"
- meta_description: "Track satellites flying above the users' locattion"
+ meta_title: "Satellites above me - Easy Satellite Tracking"
+ meta_description: "Track Starlin, Athlas, Thorad, ISS satellites longitude and latitude in real time."
  meta_image: "star-bg.png" # should exist in `app/assets/images/`

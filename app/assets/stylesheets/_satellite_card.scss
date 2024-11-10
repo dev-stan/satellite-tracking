@@ -1,24 +1,24 @@
 /* Styles for the satellite cards */
 .card {
-    width: calc(33.33% - 0.8rem); /* Three cards per row with gap */
-    height: 120px; /* Set a fixed height */
-    background-color: #f8f9fa; /* Changed from #424242 to a light shade of white */
-    color: #000; /* Changed from #fff to black */
-    border: none;
-    border-radius: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: start;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
-    &:hover {
+  width: calc(33.33% - 0.8rem); /* Three cards per row with gap */
+  height: 120px; /* Set a fixed height */
+  border: 2px solid black; /* Set black border with 2px thickness */
+  color: #000; /* Changed from #fff to black */
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+  transition: 0.4s ease;
+  cursor: pointer;
+}
 
-      background-color: rgb(216, 222, 255) !important;
-    }
-    transition: 0.4s ease;
-    cursor: pointer;
-  }
+.card:hover {
+  background-color: rgb(216, 222, 255) !important;
+}
+
   
   #satellite-cards {
     border-radius: 1.2rem;
