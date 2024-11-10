@@ -132,6 +132,16 @@
         cursor: pointer; /* Indicate that it's clickable */
       }
 
+        .marker {
+          background-color: red;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          cursor: pointer;
+          border: 2px solid black; /* Adds a white border */
+          box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Optional: Adds a subtle glow */
+        }
+
       /* Responsive Popup Adjustments */
 
       @media (min-width: 900px) {
@@ -218,7 +228,7 @@
           style: 'mapbox://styles/mapbox/streets-v11',
           center: [16.931992, 52.409538],
           zoom: 6,
-          interactive: false, // Keeps the map non-interactive (no panning or zooming)
+          interactive: true, // Keeps the map non-interactive (no panning or zooming)
         });
         let markers = [];
         let satellites = <%= raw @satelites_list.to_json %>;
@@ -314,11 +324,7 @@
             // Create a custom marker element
             const el = document.createElement('div');
             el.className = 'marker';
-            el.style.backgroundColor = 'red';
-            el.style.width = '20px';
-            el.style.height = '20px';
-            el.style.borderRadius = '50%';
-            el.style.cursor = 'pointer'; // Change cursor to pointer to indicate interactivity
+
 
             // Create popup content with additional information
             const popupContent = `

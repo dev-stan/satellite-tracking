@@ -4,7 +4,7 @@ class PagesController < ApplicationController
 
   def home
     @mapbox_token = ENV["MAPBOX_TOKEN"]
-    @satelites_list = SateliteTrack.get_satelite_nearby(52.409538, 16.931992, altitude=0, radius=30)
+    @satelites_list = SateliteTrack.get_satelite_nearby(52.409538, 16.931992, altitude=0, radius=60)
 
   end
 
