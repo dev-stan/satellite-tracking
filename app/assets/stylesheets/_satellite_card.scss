@@ -1,55 +1,74 @@
 /* Styles for the satellite cards */
 .card {
-  width: calc(33.33% - 0.8rem);
-  height: 120px;
-  border: 1px solid #e3e3e3;
+  width: calc(33.33% - 0.8rem); /* Three cards per row with gap */
+  height: 120px; /* Set a fixed height */
+  background-color: #FFFFFF; /* Changed from #424242 to a light shade of white */
   color: #000; /* Changed from #fff to black */
+  border: none;
   border-radius: 0.50rem;
+  border: 1px solid rgb(129, 129, 129);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: start;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
-  transition: 0.4s ease;
-  cursor: pointer;
-
   &:hover {
-    border: 1px solid #e3e3e3;
+
+    background-color: rgb(233, 236, 255) !important;
+    border: 1px solid black;
   }
 
   h5 {
-    font-size: 140%;
-    font-weight: bold;
+    font-size: 130%;
   }
 
   p {
-    font-size: 120%;
+    font-size: 115%;
+    font-weight: normal;
+  }
+  transition: 0.4s ease;
+  cursor: pointer;
+}
+
+#satellite-cards {
+  border-radius: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Space between cards */
+  font-size: 60%;
+  flex: 1 1 0;
+  justify-content: center;
+  min-height: 0;
+  height: 100%;
+  padding: 1rem;
+  overflow-y: auto;
+  background: #fff; /* Ensure the container has a white background */
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+#satellite-cards::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Internet Explorer and Edge */
+#satellite-cards {
+  -ms-overflow-style: none; /* IE and Edge */
+}
+@media (max-width: 1300px) {
+  .card {
+    width: calc(50% - 0.8rem);
   }
 }
 
-.card:hover {
-  background-color: rgb(220, 225, 250) !important;
+@media (max-width: 900px) {
+  .card {
+    width: calc(33.33% - 0.8rem);
+  }
 }
-
   
-  #satellite-cards {
-    border-radius: 1.2rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem; /* Space between cards */
-    font-size: 60%;
-    flex: 1 1 0;
-    min-height: 0;
-    height: 100%;
-    padding: 1rem;
-    overflow-y: auto;
-    background: #fff; /* Ensure the container has a white background */
+@media (max-width: 470px) {
+  .card {
+    width: calc(50% - 0.8rem);
   }
-  
-  /* Hide scrollbar for Chrome, Safari, and Opera */
-  #satellite-cards::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hide scrollbar for Internet Explorer and Edge */
-  #satellite-cards {
-    -ms-overflow-style: none; /* IE and Edge */
-  }
+}
