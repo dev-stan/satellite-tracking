@@ -2,9 +2,9 @@
 .card {
   width: calc(33.33% - 0.8rem);
   height: 120px;
-  border: 2px solid #e3e3e3;
+  border: 1px solid #e3e3e3;
   color: #000; /* Changed from #fff to black */
-  border-radius: 0.75rem;
+  border-radius: 0.50rem;
   display: flex;
   flex-direction: column;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
@@ -12,7 +12,7 @@
   cursor: pointer;
 
   &:hover {
-    border: 2px solid #565656;
+    border: 1px solid #e3e3e3;
   }
 
   h5 {
@@ -26,7 +26,7 @@
 }
 
 .card:hover {
-  background-color: rgb(138, 156, 254) !important;
+  background-color: rgb(220, 225, 250) !important;
 }
 
   

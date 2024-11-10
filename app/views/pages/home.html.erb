@@ -1,5 +1,4 @@
 <body>
-  <!-- Existing HTML Content -->
   <header class="header" id="header">
     <h1>satellitesaboveme.com</h1>
     <%= render 'search' %>
@@ -33,12 +32,11 @@
       </div>
     </div>
   </main>
-
-  <!-- Existing JS Links -->
+  <!-- Mapbox JS -->
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <!-- Bootstrap JS and dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Updated JavaScript Code -->
+  <!-- Your JavaScript Code -->
   <script>
     /**
      * Function to determine if the current view is mobile.
@@ -105,9 +103,11 @@
        * @param {number} index - The index of the selected satellite.
        */
       function selectSatelliteByIndex(index) {
-        // Reset all markers to default state
+        // Reset all markers to default style and close any open popups
         markers.forEach((m) => {
-          m.element.classList.remove('active');
+          m.element.style.backgroundColor = 'red';
+          m.element.style.width = '20px';
+          m.element.style.height = '20px';
           if (m.marker.getPopup().isOpen()) {
             m.marker.getPopup().remove();
           }
@@ -122,7 +122,7 @@
         const markerData = markers.find((m) => m.index == index);
         if (markerData) {
           // Highlight the selected marker
-          markerData.element.classList.add('active');
+          markerData.element.style.backgroundColor = '#002aff';
 
           // Determine popup options based on screen size
           const popupOptions = {
@@ -131,15 +131,13 @@
 
           // Create a new popup with dynamic options
           const popup = new mapboxgl.Popup(popupOptions)
-
             .setHTML(markerData.marker.getPopup()._content.innerHTML);
 
           // Set the new popup to the marker
-
           markerData.marker.setPopup(popup);
           markerData.marker.togglePopup();
           currentPopup = popup;
-          popup.element.classList.add('active');
+
           // Determine the zoom level based on screen width
           const zoomLevel = 6;
 
@@ -168,8 +166,8 @@
           const popupContent = `
             <div class="popup-content">
               <h5>${satellite.satname}</h5>
-              <div class="popup-field">Latitude: ${satellite.observer_lat.toFixed(4)} km</div>
-              <div class="popup-field">Longitude: ${satellite.observer_lng.toFixed(4)} km</div>
+              <div class="popup-field">Latitude: ${satellite.observer_lat.toFixed(4)}</div>
+              <div class="popup-field">Longitude: ${satellite.observer_lng.toFixed(4)}</div>
               <div class="popup-field">Distance (ground): ${satellite.distance.toFixed(2)} km</div>
               <!-- Add more fields as needed -->
               <div class="popup-field">Altitude: ${satellite.satalt.toFixed(2) || 'N/A'} km</div>
@@ -200,9 +198,12 @@
                 <p class="mb-1">Longitude: ${satellite.observer_lng.toFixed(4)}</p>
                 <p class="mb-1">Altitude: ${satellite.satalt.toFixed(0)} km</p>
               </div>
-            </div>`;
+            </div>
+          `;
           container.insertAdjacentHTML('beforeend', cardHtml);
         });
+
+        // Use template literals with backticks and proper interpolation
         document.getElementById('sidebar-title').textContent = `Satellites Above ${locationName}...`;
 
         const cards = container.querySelectorAll('.satellite-card');
@@ -210,16 +211,15 @@
           const index = card.getAttribute('data-index');
           const markerData = markers.find((m) => m.index == index);
 
-          // Update event listeners to toggle 'active' class
           card.addEventListener('mouseenter', () => {
             if (markerData) {
-              markerData.element.classList.add('active');
+              markerData.element.style.backgroundColor = 'blue';
             }
           });
 
           card.addEventListener('mouseleave', () => {
             if (markerData) {
-              markerData.element.classList.remove('active');
+              markerData.element.style.backgroundColor = 'red';
             }
           });
 
@@ -281,7 +281,7 @@
         if (currentPopup) {
           currentPopup.remove();
           // Re-add the popup with updated options
-          const selectedMarker = markers.find(m => m.element.classList.contains('active'));
+          const selectedMarker = markers.find(m => m.element.style.backgroundColor === 'rgb(0, 42, 255)');
           if (selectedMarker) {
             const popupOptions = {
               offset: isMobileView() ? { 'bottom': [0, -15] } : 25

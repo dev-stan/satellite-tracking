@@ -2,20 +2,20 @@
 .sidebar-button {
     padding: 0.5rem 1rem; /* Top & Bottom: 0.5rem, Left & Right: 1rem */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 2px solid #5b5b5b; /* Use a single border property */
+    border: 1px solid #5b5b5b; /* Use a single border property */
     border-radius: 0.4rem;
     display: flex;
     align-items: center; /* Vertically center */
     justify-content: center; /* Horizontally center */
     text-align: center; /* Center text for multiline */
     color: black;
-    background-color: rgb(138, 156, 254);
+    background-color: rgb(220, 225, 250);
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition for hover */
 
     /* Hover state */
     &:hover {
         background-color: rgb(138, 156, 254) !important;
-        border: 2px solid #000000; /* Use a single border property */
+        border: 1px solid #000000; /* Use a single border property */
     }
 }
