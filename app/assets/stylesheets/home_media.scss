@@ -1,0 +1,63 @@
+/* Global box-sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+
+
+  @media (max-width: 900px) {
+    .map-column, .sidebar-column {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    #sidebar {
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 470px) {
+    .header h1 {
+      font-size: 6vw;
+    }
+
+    #sidebar {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+  }
+
+  /* Responsive Popup Adjustments */
+
+  @media (min-width: 900px) {
+    #main-content {
+      padding-right: 3%;
+      padding-left: 3%;
+    }
+  }
+  @media (max-width: 900px) {
+    .mapboxgl-popup-content {
+      max-width: 90vw; /* 90% of viewport width */
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .mapboxgl-popup-content h5 {
+      font-size: 16px;
+    }
+
+    .popup-field {
+      font-size: 12px;
+    }
+  }
+
+  /* Ensure the map container takes enough space on mobile */
+  @media (max-width: 900px) {
+    #map {
+      min-height: 300px;
+    }
+  }

@@ -1,0 +1,18 @@
+/* Custom Styles for Mapbox Popups */
+.mapboxgl-popup-content {
+    border-radius: 15px; /* Rounded corners */
+    padding: 15px; /* Optional: Adjust padding */
+    font-family: 'Kanit', sans-serif; /* Consistent font */
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    max-width: 300px; /* Set a max width */
+
+    h5 {
+        margin-top: 0;
+        font-family: 'Source Code Pro', monospace;
+    }
+
+    .popup-field {
+        margin: 0px 0;
+    }
+}
+

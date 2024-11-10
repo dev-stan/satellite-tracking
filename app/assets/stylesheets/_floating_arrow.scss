@@ -2,17 +2,22 @@
     position: absolute;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%);
+    color: #fff;
     font-size: 4rem;
-    color: #ffffff;
+    text-decoration: none;
+    z-index: 1000; /* Ensure it's above other elements */
+    background: none;
+    border: none;
+    padding: 0;
     cursor: pointer;
     animation: bounce 2s infinite;
     text-decoration: none; /* Removes any hover text decoration */
-    transition: 0.4s;
+    transition: 0.8s;
   }
   
   .floating-arrow:hover {
-    color: #BC40B6;
+    color: #c2c2c2;
   }
   
   /* Bouncing Animation */
