@@ -1,0 +1,14 @@
+.marker {
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid black; /* Adds a black border */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Optional: Adds a subtle glow */
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: blue;
+    }
+}
