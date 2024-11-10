@@ -32,8 +32,13 @@
   </div>
   <!-- Add JavaScript to handle form submission and log event to Google Analytics -->
   <script>
+    function isMobileView() {
+      return window.innerWidth < 900;
+    }
     function handleFormSubmit(event) {
       event.preventDefault(); // Prevent default form submission
+
+
 
       const query = document.getElementById('search-query').value.trim();
 
@@ -52,10 +57,21 @@
       });
 
       // Smooth scroll to bottom of page
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth'
-      });
+              if (isMobileView()) {
+          // On mobile devices, scroll to the map
+          const mapElement = document.getElementById('map');
+          if (mapElement) {
+            mapElement.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            console.error("Map element with ID 'map' not found.");
+          }
+        } else {
+          // On larger screens, scroll to the bottom of the page
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+          });
+        }
     }
   </script>
   <!-- Custom CSS (unchanged) -->
