@@ -48,7 +48,7 @@ class SateliteTrack
             distance: distance,
             category: sat["category"],
             launchdate: sat["launchDate"],
-            satalt: sat["satalt"],
+            satalt: sat["satalt"]
 
 
           }

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # STAN NOTE: The code below made it impossible to view the website from mobile
   # allow_browser versions: :modern
 
-  # Code below helps out with meta tags 
+  # Code below helps out with meta tags
   def default_url_options
     { host: ENV["DOMAIN"] || "localhost:3000" }
   end
