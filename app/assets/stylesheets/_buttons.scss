@@ -8,11 +8,14 @@
     align-items: center; /* Vertically center */
     justify-content: center; /* Horizontally center */
     text-align: center; /* Center text for multiline */
+    color: black;
+    background-color: rgb(138, 156, 254);
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition for hover */
 
     /* Hover state */
     &:hover {
         background-color: rgb(138, 156, 254) !important;
+        border: 2px solid #000000; /* Use a single border property */
     }
 }
