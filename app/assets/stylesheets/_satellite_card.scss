@@ -2,17 +2,23 @@
 .card {
   width: calc(33.33% - 0.8rem); /* Three cards per row with gap */
   height: 120px; /* Set a fixed height */
-  border: 2px solid black; /* Set black border with 2px thickness */
+  border: 1px solid black; /* Set black border with 2px thickness */
   color: #000; /* Changed from #fff to black */
   border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
   transition: 0.4s ease;
   cursor: pointer;
+
+  h5 {
+    font-size: 160%;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 130%;
+  }
 }
 
 .card:hover {
