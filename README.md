@@ -1,5 +1,5 @@
 
-# [Satellite Tracker Web App](https://satellitesaboveme.com)
+# satellite-tracking
 
 ## About
 
@@ -34,8 +34,8 @@ https://github.com/user-attachments/assets/06ea856c-87fe-446f-a866-8d63562f8779
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/dev-stan/satelite-tracking.git
-   cd satelite-tracking
+   git clone https://github.com/dev-stan/satellite-tracking.git
+   cd satellite-tracking
    ```
 
 2. Install dependencies:
@@ -90,4 +90,4 @@ rails test
 
 ---
 
-For issues or contributions, open a ticket or submit a pull request on the [GitHub repository](https://github.com/dev-stan-satelite-tracking).
+For issues or contributions, open a ticket or submit a pull request on the [GitHub repository](https://github.com/dev-stan-satellite-tracking).
