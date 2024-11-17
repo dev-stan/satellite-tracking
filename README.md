@@ -9,7 +9,7 @@ By default, the app displays satellites within a 30° radius of the user’s loc
 
 
 
----
+
 
 https://github.com/user-attachments/assets/06ea856c-87fe-446f-a866-8d63562f8779
 
@@ -21,7 +21,7 @@ https://github.com/user-attachments/assets/06ea856c-87fe-446f-a866-8d63562f8779
 - Integration with Google Analytics for interaction tracking
 - Radius customization for satellite visibility
 
----
+
 
 ## Getting Started
 
@@ -56,7 +56,6 @@ https://github.com/user-attachments/assets/06ea856c-87fe-446f-a866-8d63562f8779
      export MAPBOX_TOKEN=your_mapbox_token
      ```
 
----
 
 ## Running the App
 
@@ -66,7 +65,6 @@ rails server
 ```
 Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
----
 
 ## Testing
 
@@ -75,7 +73,6 @@ Run the test suite:
 rails test
 ```
 
----
 
 ## Deployment Instructions
 
@@ -85,7 +82,6 @@ rails test
    git push dokku main
    ```
 
----
 
 ## Future Enhancements
 - Enable filtering by satellite types (e.g., weather, communication, scientific).
