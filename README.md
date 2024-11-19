@@ -90,4 +90,4 @@ rails test
 
 ---
 
-For issues or contributions, open a ticket or submit a pull request on the [GitHub repository](https://github.com/dev-stan-satellite-tracking).
+For issues or contributions, open a ticket or submit a pull request on the [GitHub repository](https://github.com/dev-stan/satellite-tracking).
