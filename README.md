@@ -70,7 +70,7 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
 Run the test suite:
 ```bash
-rails test
+rspec
 ```
 
 
