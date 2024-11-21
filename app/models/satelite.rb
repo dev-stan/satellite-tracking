@@ -1,2 +1,0 @@
-class Satelite < ApplicationRecord
-end

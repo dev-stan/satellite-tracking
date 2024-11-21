@@ -39,5 +39,7 @@ RSpec.describe User, type: :model do
             user = User.new(valid_attributes.merge(password: "password1", password_confirmation: "password2"))
             expect(user).not_to be_valid
         end
+
+        
     end
 end
