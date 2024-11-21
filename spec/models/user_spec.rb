@@ -1,7 +1,6 @@
 require "rails_helper"
 
-RSpec.describe User, type: :model do 
-
+RSpec.describe User, type: :model do
     let (:valid_attributes) do
         {
             email: "example@example.com",
@@ -31,8 +30,14 @@ RSpec.describe User, type: :model do
             expect(user).not_to be_valid
         end
 
-        
+        it "is not valid with wrong password length" do
+            user = User.new(valid_attributes.merge(password: "test", password_confirmation: "test"))
+            expect(user).not_to be_valid
+        end
 
-
+        it "is not valid without matching password" do
+            user = User.new(valid_attributes.merge(password: "password1", password_confirmation: "password2"))
+            expect(user).not_to be_valid
+        end
     end
 end

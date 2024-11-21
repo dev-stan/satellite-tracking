@@ -5,6 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :email, presence: true
-  validates :password, presence: true
+  validates :password, presence: true, length: { in: 6..30}
   validates :password_confirmation, presence: true
 end
