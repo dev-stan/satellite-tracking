@@ -7,5 +7,6 @@ class CreateUserSatellites < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
+    add_index :user_satellites, [:user_id, :satellite_id], unique: true
   end
 end

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :user_satellites, dependend: :destroy
+  has_many :user_satellites, dependent: :destroy
   has_many :saved_satellites, through: :user_satellites, source: :satellite
 
   validates :email, presence: true

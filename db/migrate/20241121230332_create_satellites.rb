@@ -3,7 +3,7 @@ class CreateSatellites < ActiveRecord::Migration[7.2]
     create_table :satellites do |t|
       t.string :name
       t.float :latitude
-      t.float :longtitude
+      t.float :longitude
 
       t.timestamps
     end

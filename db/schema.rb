@@ -14,19 +14,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_231202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "satelites", force: :cascade do |t|
-    t.integer "sat_id"
-    t.float "observer_lat"
-    t.float "observer_lng"
-    t.string "satname"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "satellites", force: :cascade do |t|
     t.string "name"
     t.float "latitude"
-    t.float "longtitude"
+    t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -38,6 +29,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_231202) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["satellite_id"], name: "index_user_satellites_on_satellite_id"
+    t.index ["user_id", "satellite_id"], name: "index_user_satellites_on_user_id_and_satellite_id", unique: true
     t.index ["user_id"], name: "index_user_satellites_on_user_id"
   end
 
