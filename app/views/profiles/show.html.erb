@@ -1,2 +1,17 @@
-<h1>Profiles#show</h1>
-<p>Find me in app/views/profiles/show.html.erb</p>
+<!-- app/views/profiles/show.html.erb -->
+
+<h1><%= current_user.email %>'s Profile</h1>
+
+<h2>Saved Satellites</h2>
+
+<% if @saved_satellites.any? %>
+  <ul>
+    <% @saved_satellites.each do |satellite| %>
+      <li>
+        <%= satellite.name %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You have not saved any satellites yet.</p>
+<% end %>
