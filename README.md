@@ -13,7 +13,8 @@ By default, the app displays satellites within a 30° radius of the user’s loc
 
 https://github.com/user-attachments/assets/06ea856c-87fe-446f-a866-8d63562f8779
 
- Database schema
+### Database schema
+ 
 ![image](https://github.com/user-attachments/assets/a7cc11ae-a66f-45d9-ad6e-2c63b9e7d2ee)
 
 
