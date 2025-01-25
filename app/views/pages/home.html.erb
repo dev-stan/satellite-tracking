@@ -1,299 +1,81 @@
-<body>
+<body data-controller="hello">
   <header class="header" id="header">
     <h1>satellitesaboveme.com</h1>
     <%= render 'search' %>
   </header>
+
   <!-- Floating Arrow as a Button -->
-  <button class="floating-arrow" aria-label="Scroll Down" id="floating-arrow">
+  <button
+    class="floating-arrow"
+    aria-label="Scroll Down"
+    id="floating-arrow"
+    data-controller="arrow"
+    data-action="click->arrow#scroll"
+  >
     <i class="fa-solid fa-chevron-down" style="text-shadow: 0px 0px 32px #ffe4af;"></i>
   </button>
-  <main class="container-fluid main-content h-100 mb-3" id="main-content">
+
+  <main
+    class="container-fluid main-content h-100 mb-3"
+    id="main-content"
+    
+    data-controller="map"
+    data-mapbox-token="<%= @mapbox_token %>"
+    data-satellites-json='<%= raw @satelites_list.to_json %>'
+
+    data-map-target="element"
+  >
     <div class="row gx-3 h-100">
       <!-- Map Column -->
       <div class="col-12 col-md-8 mb-4 mb-md-0 d-flex justify-content-center map-column">
-        <div id="map" class="w-100 h-100 rounded shadow" style="min-height: 400px;" tabindex="-1"></div>
+        <div
+          id="map"
+          class="w-100 h-100 rounded shadow"
+          style="min-height: 400px;"
+          tabindex="-1"
+          data-map-target="map"
+        ></div>
       </div>
+
       <!-- Sidebar Column -->
       <div class="col-12 col-md-4 d-flex flex-column h-100 sidebar-column">
         <div id="sidebar" class="bg-white rounded shadow h-100 d-flex flex-column">
           <div id="sidebar-header" class="p-4 border-bottom">
-            <h4 id="sidebar-title" class="text-center mb-4">Satellites Above Poznan...</h4>
+            <h4 id="sidebar-title" class="text-center mb-4" data-map-target="sidebarTitle">
+              Satellites Above ...
+            </h4>
             <div class="d-flex gap-2 flex-wrap justify-content-center">
-              <div class="sidebar-button flex-fill" id="search-again">Search again</div>
-              <div class="sidebar-button flex-fill" id="learn-more">Learn more</div>
-              <div class="sidebar-button flex-fill" id="other-projects">Reset zoom</div>
+              <div class="sidebar-button flex-fill" data-map-target="searchAgain" id="search-again">
+                Search again
+              </div>
+              <div class="sidebar-button flex-fill" data-map-target="learnMore" id="learn-more">
+                Learn more
+              </div>
+              <div class="sidebar-button flex-fill" data-map-target="otherProjects" id="other-projects">
+                Reset zoom
+              </div>
             </div>
           </div>
-          <div id="satellite-cards" class="p-3 overflow-auto flex-grow-1 d-flex">
+          <div
+            id="satellite-cards"
+            class="p-3 overflow-auto flex-grow-1 d-flex"
+            data-map-target="satelliteCards"
+          >
           </div>
-          <div class="mb-3 border-top d-flex text-center align-items-center">
-          </div>
+          <div class="mb-3 border-top d-flex text-center align-items-center"></div>
         </div>
       </div>
     </div>
+
+    <!-- You probably have the search form partial as well; link the targets accordingly -->
+    <form id="search-form" data-map-target="searchForm" style="display:none;">
+      <input type="text" id="search-query" data-map-target="searchQuery" />
+      <button type="submit">Search</button>
+    </form>
   </main>
+
   <!-- Mapbox JS -->
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-  <!-- Bootstrap JS and dependencies -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Your JavaScript Code -->
-  <script>
-    /**
-     * Function to determine if the current view is mobile.
-     * @returns {boolean} True if mobile view, false otherwise.
-     */
-    function isMobileView() {
-      return window.innerWidth < 900;
-    }
-
-    const floatingArrow = document.querySelector('#floating-arrow');
-
-    floatingArrow.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default anchor behavior
-
-      if (isMobileView()) {
-        // On mobile devices, scroll to the map
-        const mapElement = document.getElementById('map');
-        if (mapElement) {
-          mapElement.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          console.error("Map element with ID 'map' not found.");
-        }
-      } else {
-        // On larger screens, scroll to the bottom of the page
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth'
-        });
-      }
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-      mapboxgl.accessToken = "<%= @mapbox_token %>";
-      const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [16.931992, 52.409538],
-        zoom: 6,
-        interactive: true, // Allows interactivity (panning and zooming)
-      });
-      let markers = [];
-      let satellites = <%= raw @satelites_list.to_json %>;
-
-      // Variable to keep track of the currently open popup
-      let currentPopup = null;
-
-      const searchAgainBtn = document.querySelector('#search-again');
-      searchAgainBtn.addEventListener('click', () => {
-        document.getElementById('header').scrollIntoView({ behavior: 'smooth' });
-      });
-
-      const learnMoreBtn = document.querySelector('#learn-more');
-      learnMoreBtn.addEventListener('click', () => {
-        window.open('https://www.n2yo.com/?s=16763', '_blank');
-      });
-
-      const otherProjectsBtn = document.querySelector('#other-projects');
-      otherProjectsBtn.addEventListener('click', () => {
-        map.flyTo({ zoom: 4.5 }); // Adjusts the zoom level to 4.5 smoothly
-      });
-
-      /**
-       * Function to handle the selection of a marker or card by index.
-       * @param {number} index - The index of the selected satellite.
-       */
-      function selectSatelliteByIndex(index) {
-        // Reset all markers to default style and close any open popups
-        markers.forEach((m) => {
-          m.element.style.backgroundColor = 'red';
-          m.element.style.width = '20px';
-          m.element.style.height = '20px';
-          if (m.marker.getPopup().isOpen()) {
-            m.marker.getPopup().remove();
-          }
-        });
-
-        // Close the currently open popup if it exists
-        if (currentPopup) {
-          currentPopup.remove();
-        }
-
-        // Find the selected marker
-        const markerData = markers.find((m) => m.index == index);
-        if (markerData) {
-          // Highlight the selected marker
-          markerData.element.style.backgroundColor = '#002aff';
-
-          // Determine popup options based on screen size
-          const popupOptions = {
-            offset: isMobileView() ? { 'bottom': [0, -15] } : 25
-          };
-
-          // Create a new popup with dynamic options
-          const popup = new mapboxgl.Popup(popupOptions)
-            .setHTML(markerData.marker.getPopup()._content.innerHTML);
-
-          // Set the new popup to the marker
-          markerData.marker.setPopup(popup);
-          markerData.marker.togglePopup();
-          currentPopup = popup;
-
-          // Determine the zoom level based on screen width
-          const zoomLevel = 6;
-
-          // Fly to the marker's location with the appropriate zoom level
-          map.flyTo({ center: markerData.marker.getLngLat(), zoom: zoomLevel });
-
-          // Remove focus to prevent scrolling
-          if (document.activeElement) {
-            document.activeElement.blur();
-          }
-        }
-      }
-
-      function initializeMapAndCards(satellites, lat, lng, locationName) {
-        map.setCenter([lng, lat]);
-        markers.forEach((markerData) => markerData.marker.remove());
-        markers = [];
-        const container = document.getElementById('satellite-cards');
-        container.innerHTML = '';
-        satellites.forEach((satellite, index) => {
-          // Create a custom marker element
-          const el = document.createElement('div');
-          el.className = 'marker';
-
-          // Create popup content with additional information
-          const popupContent = `
-            <div class="popup-content">
-              <h5>${satellite.satname}</h5>
-              <div class="popup-field">Latitude: ${satellite.observer_lat.toFixed(4)}</div>
-              <div class="popup-field">Longitude: ${satellite.observer_lng.toFixed(4)}</div>
-              <div class="popup-field">Distance (ground): ${satellite.distance.toFixed(2)} km</div>
-              <!-- Add more fields as needed -->
-              <div class="popup-field">Altitude: ${satellite.satalt.toFixed(2) || 'N/A'} km</div>
-              <div class="popup-field">Launch Date: ${satellite.launchdate || 'N/A'}</div>
-              <div class="popup-field">Category: ${satellite.category || 'N/A'}</div>
-            </div>
-          `;
-
-          const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent);
-
-          const marker = new mapboxgl.Marker(el)
-            .setLngLat([satellite.observer_lng, satellite.observer_lat])
-            .setPopup(popup)
-            .addTo(map);
-
-          markers.push({ marker: marker, index: index, element: el });
-
-          // Add click event listener to the marker element
-          el.addEventListener('click', () => {
-            selectSatelliteByIndex(index);
-          });
-
-          const cardHtml = `
-            <div class="card satellite-card" data-index="${index}">
-              <div class="p-2">
-                <h5>${satellite.satname}</h5>
-                <p class="mb-1">Latitude: ${satellite.observer_lat.toFixed(4)}</p>
-                <p class="mb-1">Longitude: ${satellite.observer_lng.toFixed(4)}</p>
-                <p class="mb-1">Altitude: ${satellite.satalt.toFixed(0)} km</p>
-              </div>
-            </div>
-          `;
-          container.insertAdjacentHTML('beforeend', cardHtml);
-        });
-
-        // Use template literals with backticks and proper interpolation
-        document.getElementById('sidebar-title').textContent = `Satellites Above ${locationName}...`;
-
-        const cards = container.querySelectorAll('.satellite-card');
-        cards.forEach((card) => {
-          const index = card.getAttribute('data-index');
-          const markerData = markers.find((m) => m.index == index);
-
-          card.addEventListener('mouseenter', () => {
-            if (markerData) {
-              markerData.element.style.backgroundColor = 'blue';
-            }
-          });
-
-          card.addEventListener('mouseleave', () => {
-            if (markerData) {
-              markerData.element.style.backgroundColor = 'red';
-            }
-          });
-
-          card.addEventListener('click', function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-            const index = this.getAttribute('data-index');
-            console.log(`Satellite card clicked: Index ${index}`);
-            selectSatelliteByIndex(index);
-
-            // Remove focus to prevent scrolling
-            if (document.activeElement) {
-              console.log(`Blurring active element: ${document.activeElement}`);
-              document.activeElement.blur();
-            }
-          });
-        });
-      }
-
-      initializeMapAndCards(satellites, 52.409538, 16.931992, 'Poznan');
-
-      const searchForm = document.getElementById('search-form');
-      const searchQueryInput = document.getElementById('search-query');
-
-      searchForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const query = searchQueryInput.value.trim();
-        if (!query) {
-          alert('Please enter a city name.');
-          return;
-        }
-        fetch(`/search?query=${encodeURIComponent(query)}`)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.error) {
-              alert(data.error);
-              return;
-            }
-            initializeMapAndCards(data.satellites, data.observer_lat, data.observer_lng, query);
-          })
-          .catch((error) => {
-            console.error('Error fetching data:', error);
-            alert(`An error occurred: ${error.message}`);
-          });
-      });
-
-      window.addEventListener('load', () => {
-        map.resize();
-      });
-
-      // Optional: Log focus events for debugging
-      document.addEventListener('focusin', (event) => {
-        console.log(`Element focused: ${event.target}`);
-      });
-
-      // Handle window resize to adjust popups if necessary
-      window.addEventListener('resize', () => {
-        // If a popup is open, reposition it
-        if (currentPopup) {
-          currentPopup.remove();
-          // Re-add the popup with updated options
-          const selectedMarker = markers.find(m => m.element.style.backgroundColor === 'rgb(0, 42, 255)');
-          if (selectedMarker) {
-            const popupOptions = {
-              offset: isMobileView() ? { 'bottom': [0, -15] } : 25
-            };
-            const newPopup = new mapboxgl.Popup(popupOptions)
-              .setHTML(selectedMarker.marker.getPopup()._content.innerHTML);
-            selectedMarker.marker.setPopup(newPopup);
-            selectedMarker.marker.togglePopup();
-            currentPopup = newPopup;
-          }
-        }
-      });
-    });
-  </script>
 </body>
