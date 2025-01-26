@@ -15,9 +15,7 @@ export default class extends Controller {
   connect() {
     // Get data from our HTML element
     this.mapboxToken = this.element.dataset.mapboxToken
-    this.mapboxToken = this.element.dataset.mapboxToken
     this.satellites = JSON.parse(this.element.dataset.satellitesJson || "[]")
-    console.log(this.satellites)
 
     // Initialize map
     mapboxgl.accessToken = "pk.eyJ1Ijoic3RhbnphbCIsImEiOiJjbHZrZGUxMmIxbnFuMmlwdXN1dHdnaHl0In0.VMt5dTMfCLySC2UZYeEZDw"
@@ -43,32 +41,16 @@ export default class extends Controller {
       this.map.flyTo({ zoom: 4.5 })
     })
 
-    // Search form
-    this.searchFormTarget.addEventListener('submit', (event) => {
-      event.preventDefault()
-      const query = this.searchQueryTarget.value.trim()
-      if (!query) {
-        alert('Please enter a city name.')
-        return
-      }
-      fetch(`/search?query=${encodeURIComponent(query)}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.error) {
-            alert(data.error)
-            return
-          }
-          this.initializeMapAndCards(data.satellites, data.observer_lat, data.observer_lng, query)
-        })
-        .catch((error) => {
-          console.error('Error:', error)
-          alert(`An error occurred: ${error.message}`)
-        })
-    })
+    
 
     // Initialize with default location
     this.initializeMapAndCards(this.satellites, 52.409538, 16.931992, 'Poznan')
     this.map.resize()
+
+    document.addEventListener("search:completed", (event) => {
+      const { satellites, lat, lng, query } = event.detail
+      this.initializeMapAndCards(satellites, lat, lng, query)
+    })
 
     // Handle window resize for popups
     window.addEventListener('resize', () => {

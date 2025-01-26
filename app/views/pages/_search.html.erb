@@ -1,5 +1,8 @@
 <!-- app/views/pages/_search.html.erb -->
-<div class="search-container mb-4">
+<div class="search-container mb-4" 
+  data-controller="search"
+
+  >
   <div
     class="search-input-wrapper py-1 px-1"
     style="box-shadow: 0px 0px 32px #FFE4AF; max-width: 600px; width: 100%; background-color: #fff; border-radius: 1rem;"
@@ -10,6 +13,7 @@
       action="#"
       method="GET"
       onsubmit="handleFormSubmit(event)"
+      data-search-target="searchForm"
     >
       <!-- Search Input -->
       <input
@@ -18,6 +22,7 @@
         name="query"
         class="search-input"
         placeholder="Your location..."
+        data-search-target="searchQuery"
       >
         <!-- Submit Button -->
         <button
