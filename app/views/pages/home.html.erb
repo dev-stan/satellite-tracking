@@ -1,4 +1,4 @@
-<body data-controller="hello">
+<body>
   <header class="header" id="header">
     <h1>satellitesaboveme.com</h1>
     <%= render 'search' %>
@@ -68,6 +68,7 @@
     </div>
 
     <!-- You probably have the search form partial as well; link the targets accordingly -->
+    
     <form id="search-form" data-map-target="searchForm" style="display:none;">
       <input type="text" id="search-query" data-map-target="searchQuery" />
       <button type="submit">Search</button>

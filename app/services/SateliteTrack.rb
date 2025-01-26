@@ -7,16 +7,9 @@ class SateliteTrack
   BASE_URL = "https://api.n2yo.com/rest/v1/satellite"
   GEOCODING_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places"
 
-  API_KEY = ENV["N2YO_TOKEN"]
+  N2YO_TOKEN = ENV["N2YO_TOKEN"]
   MAPBOX_TOKEN = ENV["MAPBOX_TOKEN"]
 
-  # Define the category mapping
-  SATELLITE_CATEGORY_MAPPING = {
-    20480 => 18, # Amateur radio
-    26609 => 35, # Beidou Navigation System
-    40719 => 1  # Brightest
-    # Add all other mappings here
-  }
 
   # Haversine formula to calculate distance in km
   def self.calculate_distance(lat1, lon1, lat2, lon2)
@@ -38,7 +31,7 @@ class SateliteTrack
 
   def self.get_satelite_nearby(latitude, longitude, altitude, radius, category_id = 0)
     # Build the request URL with the specified category_id
-    uri = URI("#{BASE_URL}/above/#{latitude}/#{longitude}/#{altitude}/#{radius}/#{category_id}/&apiKey=#{API_KEY}")
+    uri = URI("#{BASE_URL}/above/#{latitude}/#{longitude}/#{altitude}/#{radius}/#{category_id}/&apiKey=#{N2YO_TOKEN}")
     response = Net::HTTP.get(uri)
     data = JSON.parse(response)
 
@@ -50,8 +43,8 @@ class SateliteTrack
           distance = calculate_distance(latitude, longitude, sat["satlat"], sat["satlng"])
 
           # Determine the category_id for the satellite
-          # If category_id is 0 (all categories), look up the category from the mapping
-          assigned_category_id = category_id == 0 ? (SATELLITE_CATEGORY_MAPPING[sat["satid"]] || 0) : category_id
+          # No category - #todo
+          assigned_category_id = 0
 
           satelite_list << {
             sat_id: sat["satid"],
