@@ -2,8 +2,6 @@ source "https://rubygems.org"
 ruby "3.3.10"
 gem "bootstrap"
 gem "sassc-rails"
-gem "dotenv-rails"
-gem "dotenv"
 gem "font-awesome-sass"
 gem "google-analytics"
 gem "json"
@@ -56,10 +54,14 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "dotenv-rails"
+  gem "dotenv"
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "dotenv-rails"
+  gem "dotenv"
 end
