@@ -3,7 +3,7 @@ class PagesController < ApplicationController
     protect_from_forgery with: :null_session  # Necessary for API-like endpoints
 
     def home
-      @mapbox_token = ENV["MAPBOX_TOKEN"]
+      @mapbox_token = ENV["MAPBOX_TOKN"]
       @satelites_list = SateliteTrack.get_satelite_nearby(52.409538, 16.931992, altitude=0, radius=60)
     end
 

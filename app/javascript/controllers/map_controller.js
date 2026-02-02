@@ -18,7 +18,7 @@ export default class extends Controller {
     this.satellites = JSON.parse(this.element.dataset.satellitesJson || "[]")
 
     // Initialize map
-    mapboxgl.accessToken = "pk.eyJ1Ijoic3RhbnphbCIsImEiOiJjbHZrZGUxMmIxbnFuMmlwdXN1dHdnaHl0In0.VMt5dTMfCLySC2UZYeEZDw"
+    mapboxgl.accessToken = this.mapboxToken
     this.map = new mapboxgl.Map({
       container: this.mapTarget,
       style: 'mapbox://styles/mapbox/streets-v11',
