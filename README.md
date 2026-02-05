@@ -13,15 +13,9 @@ By default, the app displays satellites within a 30° radius of the user’s loc
 
 https://github.com/user-attachments/assets/06ea856c-87fe-446f-a866-8d63562f8779
 
-### Database schema
- 
-![image](https://github.com/user-attachments/assets/a7cc11ae-a66f-45d9-ad6e-2c63b9e7d2ee)
-
-
-
 
 ## Features
-- Real-time satellite tracking
+- Real-time satellite tracking snapshot
 - Map visualization using Mapbox
 - Integration with Google Analytics for interaction tracking
 - Radius customization for satellite visibility
@@ -57,7 +51,7 @@ https://github.com/user-attachments/assets/06ea856c-87fe-446f-a866-8d63562f8779
 4. Configure API keys:
    - Add your N2YO API key and Mapbox token to the environment variables:
      ```bash
-     export N2YO_API_KEY=your_n2yo_key
+     export N2YO_TOKRN=your_n2yo_token
      export MAPBOX_TOKEN=your_mapbox_token
      ```
 
